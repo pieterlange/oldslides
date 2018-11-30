@@ -1,0 +1,140 @@
+<!doctype html>
+<html>
+  <head>
+    <!-- Use with reveal.js 3.3.0 -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Kubernetes addicts visit</title>
+
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/black.css">
+
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section>
+          <h1>unnamed company</h1>
+        </section>
+        <section>
+          <h3>Our stack</h3>
+          <ul>
+            <li class="fragment">gitlab</li>
+            <li class="fragment">jira/confluence</li>
+            <li class="fragment">selenium</li>
+            <li class="fragment">kibana (EFK), grafana (prom), sentry</li>
+            <li class="fragment">nodejs</li>
+            <li class="fragment">nginx-ingress + oauth2_proxy</li>
+            <li class="fragment">some odd services (rstudio, big data importing)</li>
+            <li class="fragment">TODO jaeger/opentracing</li>
+          </ul>
+        </section>
+        <section>
+          <h3>Our stack</h3>
+          <ul>
+            <li>Multi-cloud</li>
+            <li class="fragment">GKE</li>
+            <li class="fragment">IBM cloud <div class="fragment">(artist formerly known as bluemix)</div>
+            <div class="fragment">(i mean softlayer)</div>
+            <div class="fragment">(and composedb)</div>
+            <div class="fragment">(and some partnership with cloudfoundry)</div></li>
+          </ul>
+        </section>
+        <section>
+          <h3>What works well</h3>
+          <ul>
+            <li>gitlab (CI)</li>
+            <li>observability &amp; chatops</li>
+            <ul>
+							<li class="fragment">sentry</li>
+							<li class="fragment">prometheus</li>
+							<li class="fragment">kube-backup</li>
+            </ul>
+            <li>kibana logtrail plugin</li>
+            <li>dynamic (temporary) environments (*)</li>
+            <li>development team self-reliance (*)</li>
+          </ul>
+        </section>
+        <section>
+          <h3>What sucks (part 1: IBM)</h3>
+          <ul>
+            <li><a href="https://console.bluemix.net/status?tags=platform,runtimes,services,ibm:yp:eu-de,containers-kubernetes&view=n:i">Terrible availability</a></li>
+            <li class="fragment">Terrible MTTR</li>
+            <li class="fragment">Ducttaped cloud</li>
+            <li class="fragment">Kafkaesque support organisation</li>
+            <li class="fragment">IAM :exploding_head:</li>
+          </ul>
+        </section>
+        <section>
+          <h3>What sucks (part 2: IBM ComposeDB)</h3>
+          <ul>
+            <li>Public endpoint</li>
+            <li>Static user/password</li>
+            <li>No control (enforce TLS?!)</li>
+            <li>No visibility</li>
+          </ul>
+          <div class="fragment">
+          <p>Solutions:</p>
+          <ul>
+            <li>Fuck it, i'll build my own DB platform!</li>
+						<ul>
+							<li class="fragment">with blackjack, and hookers!</li>
+              <li class="fragment">actually with operators. any suggestions?</li>
+            </ul>
+            <li class="fragment">pgbouncer</li>
+          </ul>
+          </div>
+        </section>
+        <section>
+          <h3>What sucks (part 3: the devopsing)</h3>
+          <ul>
+            <li class="fragment">Insecure dockerbuilds (TODO kaniko?)</li>
+            <li class="fragment">Registry starts serving corrupt images every now and then</li>
+            <li class="fragment">Barely using RBAC, networkpolicies, PSP</li>
+            <li class="fragment">Team adjustment to new mgmt style (actually works reasonably well)</li>
+            <li class="fragment">Management buy-in</li>
+          </ul>
+        </section>
+        <section>
+          <img src="img/devops.gif" style="border:none; background:none;width:50%;"/>
+        </section>
+        <section>
+          <img src="img/just-do-it.gif" style="border:none; background:none;"/>
+        </section>
+      </div>
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.js"></script>
+
+    <script>
+      // More info https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        history: true,
+        width: '90%',
+        height: '90%',
+
+        // More info https://github.com/hakimel/reveal.js#dependencies
+        dependencies: [
+          { src: 'plugin/markdown/marked.js' },
+          { src: 'plugin/markdown/markdown.js' },
+          { src: 'plugin/notes/notes.js', async: true },
+          { src: 'plugin/tagcloud/tagcloud.js', async: true },
+          { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+        ]
+      });
+    </script>
+  </body>
+</html>

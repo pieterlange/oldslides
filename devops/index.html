@@ -1,0 +1,278 @@
+<!doctype html>
+<html>
+	<head>
+    <!-- Use with reveal.js 3.3.0 -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>WTF is devops anyway</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+        <section>
+          <h3>Agenda</h3>
+          <ol>
+            <li>Traditional IT</li>
+            <li>WTF is DevOps</li>
+            <ul>
+              <small>
+                <li>The New Way</li>
+                <li>What it is <b>NOT!!</b></li>
+              </small>
+            </ul>
+            <li>Responsibilities, accountability, HELP</li>
+          </ol>
+
+        </section>
+        <section>
+          <section>
+            <h2>Service &amp; project management the traditional way</h2>
+            <ul>
+              <li class="fragment">ITIL</li>
+              <li class="fragment">Prince2</li>
+              <li class="fragment">ITSM</li>
+            </ul>
+          </section>
+          <section>
+            <h5>Prince2</h5>
+            <img src="img/prince2.png" style="border:none; background:none:;width:80%"/>
+          </section>
+          <section>
+            <h5>ITSM</h5>
+            <img src="img/itsm.png" style="border:none; background:none:;width:40%"/>
+          </section>
+          <section>
+            <img src="img/monkey.gif" style="border:none; background:none:;width:70%"/>
+          </section>
+          <section>
+            <h5>There's a new sheriff in town</h5>
+            <ul>
+              <li class="fragment">Agile</li>
+              <li class="fragment">DevOps</li>
+              <li class="fragment">DevSecOps</li>
+            </ul>
+            <p class="fragment">Let's not forget the lessons from the past...</p>
+          </section>
+          <section>
+            <img src="img/eastwood.gif" style="border:none; background:none:;width:70%"/>
+          </section>
+          <section>
+            <h1>Definitions &amp; terminology</h1>
+            <i>DevOps is the practice of operations and development engineers participating together in the entire service lifecycle, from design through the development process to production support. </i>
+            <br/>
+            <br/>
+            <br/>
+            <p class="fragment">DevOps is also characterized by:</p>
+            <ul>
+              <li class="fragment">operations staff making use many of the same tools and techniques as developers for their systems work.</p>
+              <li class="fragment">development staff making use many of the same tools and techniques as operations for their development work.</p>
+            </ul>
+          </section>
+          <section>
+            <img src="img/devops.gif" style="border:none; background:none;width:50%;"/>
+          </section>
+          <section>
+            <h1>Who?</h1>
+            <ul>
+              <li><b>Ops</b><i class="fragment"> - "Ops" is a blanket term for systems engineers, system administrators, operations staff, release engineers, DBAs, network engineers, security professionals, and various other subdisciplines and job titles.</i></li>
+              <li><b>Dev</b><i class="fragment"> - "Development", in practice it is even wider and means "all the people involved in developing the product," which can include Product, QA, and other kinds of disciplines.</i></li>
+          </section>
+          <section>
+            <h1>Who?</h1>
+            <img src="img/topmen.gif" style="border:none; background:none;width:80%"/>
+            <p>Top dudes (multigender)</p>
+          </section>
+          <section>
+            <h1>Who?</h1>
+            <img src="img/devops-strategy-venn-diagram.png" style="border:none; background:none;"/>
+          </section>
+          <section>
+            <h1>What?</h1>
+            <p><i>The main characteristic of the DevOps movement is to strongly advocate automation and monitoring at all steps of software construction, from integration, testing, releasing to deployment and infrastructure management. DevOps aims at shorter development cycles, increased deployment frequency, and more dependable releases, in close alignment with business objectives.</i> - wikipedia</p>
+            <ul>
+              <li class="fragment">monitoring throughout the delivery process</li>
+              <li class="fragment">automation throughout the delivery process</li>
+              <li class="fragment">decrease time to market &amp; MTBR &amp; increase MTBF</li>
+          </section>
+          <section>
+            <h2>How? (episode one - "Tools")</h1>
+            <ul>
+              <li class="fragment">strong foundation (kubernetes and containerization)</li>
+              <li class="fragment">gitlab</li>
+              <li class="fragment">CI/CD</li>
+              <li class="fragment">jira</li>
+              <li class="fragment">selenium</li>
+              <li class="fragment">kibana, grafana, sentry</li>
+              <li class="fragment">TODO jaeger/opentracing</li>
+            </ul>
+          </section>
+          <section>
+            <h5>How? (technical process)</h5>
+            <img src="img/devops-strategy-example-pipeline.png" style="border:none; background:none;"/>
+          </section>
+
+          <section>
+            <h2>How? (episode two - "Process")</h1>
+            <ul>
+              <li class="fragment">.....</li>
+              <li class="fragment">"Shift to the left"</i></li>
+              <li class="fragment">Reduce silos and handoffs</i></li>
+              <li class="fragment">We could start with designated time for devops in sprints</li>
+              <li class="fragment">Measure, learn, adapt</li>
+            </ul>
+          </section>
+
+          <section>
+            <img src="img/software.gif" style="border:none; background:none:;width:90%"/>
+          </section>
+          <section>
+            <img src="img/helpyourself.jpg" style="border:none; background:none:;width:60%"/>
+          </section>
+
+          <section>
+            <h5>How? (discussion)</h5>
+            <p>How do we deal with...<p/>
+            <ul>
+              <li class="fragment">suppliers</li>
+              <li class="fragment">feedback loops of customers</li>
+              <li class="fragment">grand application design &amp; longevity</li>
+            </ul>
+            <img src="img/handstied.gif" style="border:none; background:none:;width:40%"/>
+          </section>
+          <section>
+            <img src="img/ateam.gif" style="border:none; background:none:;width:60%"/>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h1>What DevOps is not</h1>
+            <img src="img/onemanband.jpg" class="fragment" style="border:none; background:none;width:25%"/>
+              <ul>
+                <li class="fragment">just tooling</li>
+                <li class="fragment">just process</li>
+                <li class="fragment">a job title</li>
+                <li class="fragment">.. "we're hip and modern!"</li>
+              </ul>
+          </section>
+          <section>
+            <img src="img/middle-man.png" style="border:none; background:none:;width:30%"/>
+          </section>
+          <section>
+            <img src="img/miracles.gif" style="border:none; background:none:;width:80%"/>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h1>This all sounds scary or boring</h1>
+            <p>I'm trying to run a business here!</p>
+
+            <ul>
+              <li class="fragment">Who is responsible?</li>
+              <li class="fragment">Who is accountable?</li>
+              <li class="fragment">Who is consulted?</li>
+              <li class="fragment">Who is informed?</li>
+            </ul>
+          </section>
+
+          <section>
+            <img src="img/creativity.gif" style="border:none; background:none:;width:90%"/>
+          </section>
+
+          <section>
+            <h1>Really?!</h1>
+            <img src="img/nopower.gif" class="fragment" style="border:none; background:none;width:40%"/>
+            <p class="fragment">Lets give mapping these things a try...</p>
+          </section>
+
+          <section>
+            <h1>Responsible</h1>
+            <a href="https://medium.com/@cote/roles-and-responsibilities-for-devops-and-agile-teams-fdacbffb4cb4"><img src="img/rolesresponsibilities.jpeg" style="border:none; background:none;width:100%"/></a>
+          </section>
+          <section>
+            <img src="img/truth.jpeg" style="border:none; background:none:;width:30%"/>
+          </section>
+          <section>
+            <h1>Responsible</h1>
+            <p>Lets talk about customer support</p>
+            <ul>
+              <li class="fragment">On call <i>sucks</i></li>
+              <li class="fragment">Helpdesks tend to suck and/or are massively expensive to operate</li>
+              <li class="fragment">Breeds bureaucracy culture</li>
+            </ul>
+            <img src="img/redundancy.png" style="border:none; background:none:;width:30%"/>
+          </section>
+          <section>
+            <img src="img/oncall.gif" style="border:none; background:none:;width:70%"/>
+          </section>
+          <section>
+            <img src="img/fixit.gif" style="border:none; background:none:;width:60%"/>
+          </section>
+          <section>
+            <h1>Accountable</h1>
+            <p><i>The enemy of accountability is ambiguity</i></p>
+            <ul>
+              <li class="fragment">3rd party dependencies</li>
+              <li class="fragment">SaaS, PaaS, IaaS, PaasHaas</li>
+            </ul>
+          </section>
+          <section>
+            <h1>Consulted</h1>
+            <ul>
+              <li class="fragment">Business/domain expert consulted during app design</li>
+              <li class="fragment">Are we missing anyone?</li>
+            </ul>
+          </section>
+          <section>
+            <h1>Informed</h1>
+            <ul>
+              <li class="fragment">Who?</li>
+              <li class="fragment">When?</li>
+            </ul>
+          </section>
+        </section>
+        <section>
+          <h1>We still haven't run out the clock? Freeform discussion yo.</h1>
+        </section>
+
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				history: true,
+        width: '90%',
+        height: '90%',
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+          { src: 'plugin/tagcloud/tagcloud.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>

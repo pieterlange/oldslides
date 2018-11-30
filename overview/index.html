@@ -1,0 +1,643 @@
+<!doctype html>
+<html>
+	<head>
+    <!-- Use with reveal.js 3.3.0 -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Modern infra Brenntag</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+        <section>
+          <h3>Agenda</h3>
+          <ol>
+            <li>Quick recap on containers</li>
+            <li>Kubernetes</li>
+            <ul>
+              <small>
+                <li>Primitives</li>
+                <li>Cluster components</li>
+              </small>
+            </ul>
+            <li>Demo</li>
+          </ol>
+
+        </section>
+        <section>
+          <section>
+            <h5>Containers (or: why are we doing this again?)</h5>
+            <img src="img/cargo-transport-pre-1960.png" style="border:none; background:none;"/>
+          </section>
+          <section>
+            <h5>Containers (or: why are we doing this again?)</h5>
+            <img src="img/intermodal-shipping-container.png" style="border:none; background:none;"/>
+          </section>
+          <section data-transition="fade-out">
+            <img src="img/logo_docker.png" style="border:none; background:none; width:90%;"/><br/>
+            <h5>&lt;insert hype here&gt;</h5>
+          </section>
+          <section tagcloud data-transition="fade-in">
+            <img src="img/logo_docker.png" style="border:none; background:none; width:90%"/><br/>
+            Cloud native
+            DevOps
+            On-Demand Self Service
+            Agile
+            NoOps
+            PaaS
+            Microservice
+            Infrastructure as Code
+          </section>
+          <section>
+            <h5>Sort of looks like this</h5>
+            <img src="img/why_containers.png" style="border:none; background:none;"/>
+          </section>
+          <section>
+            <h3>Really looks like this</h3>
+            <a href="http://12factor.net/">The Twelve-Factor App</a>
+          </section>
+          <section>
+            <h5>Software container benefits 1/3</h5>
+            <ul>
+              <li>Agile application creation and deployment</li>
+              <li>Continuous development, integration, and deployment</li>
+              <li>Dev and Ops separation of concerns</li>
+            </ul>
+            <p/>
+            <small><em>Source: <a href="http://kubernetes.io/docs/whatisk8s/">http://kubernetes.io/docs/whatisk8s/</a></em></small>
+          </section>
+          <section>
+            <h5>Software container benefits 2/3</h5>
+            <ul>
+              <li>Environmental consistency across development, testing, and production</li>
+              <li>Cloud and OS distribution portability</li>
+              <li>Application-centric management</li>
+            </ul>
+            <p/>
+            <small><em>Source: <a href="http://kubernetes.io/docs/whatisk8s/">http://kubernetes.io/docs/whatisk8s/</a></em></small>
+          </section>
+          <section>
+            <h5>Software container benefits 3/3</h5>
+            <ul>
+              <li>Loosely coupled, distributed, elastic, liberated micro-services</li>
+              <li>Resource isolation</li>
+              <li>Resource utilization</li>
+            </ul>
+            <p/>
+            <small><em>Source: <a href="http://kubernetes.io/docs/whatisk8s/">http://kubernetes.io/docs/whatisk8s/</a></em></small>
+          </section>
+          <section>
+            <img src="img/thatsavm.jpg" style="border:none; background:none; width: 25%"/>
+          </section>
+          <section>
+            <h5>Containers (or: why are we doing this again?)</h5>
+            <ul>
+              <li>IT industry maturation</li>
+              <li>We're pretty good at shipping software</li>
+              <li>We operate software like most other SMBs</li>
+              <li>Infra is important too</li>
+            </ul>
+          </section>
+          <section>
+            <h2>Problem solved!</h2>
+            <p class="fragment"><small>Now all we need to do is find a way to manage all of these containers...</small></p>
+          </section>
+          <section>
+            <img src="img/containership_fail.jpg" style="border:none; background:none; width: 70%"/>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h1>Design parameters</h1>
+          </section>
+          <section>
+            <h5>Open</h5>
+            <ul>
+              <li>Open source</li>
+              <li>Open standards</li>
+              <li>Open security</li>
+              <li class="fragment" data-fragment-index="2">No vendor lock-in</li>
+            </ul>
+            <span style="float:right">
+              <img class="fragment" data-fragment-index="1" src="img/stallman.jpg" width="50%" style="border:none; background:none;"/>
+            </span>
+          </section>
+          <section>
+            <h5>Portable and flexible</h5>
+            <ul>
+              <li>Cloud provider agnostic</li>
+              <li>Strong primitives</li>
+              <li>Swappable components<span class="fragment"> (that includes me)</span></li>
+              <li>No vendor lock-in</li>
+            </ul>
+          </section>
+          <section>
+            <h5>Component health & maturity</h5>
+            <ul>
+              <li>Healthy project community</li>
+              <li>Production usage</li>
+              <li>Third parties</li>
+            </ul>
+          </section>
+        </section>
+        <section>
+          <section>
+            <img src="img/logo_kubernetes.png" style="border:none; background:none; width: 35%"/><br/>
+            <h1>Kubernetes</h1>
+            <h5 class="fragment">..or "k8s"</h5>
+          </section>
+          <section>
+            <h4>Container orchestrator</h4>
+            <ul>
+              <li>Open &#10004;</li>
+              <li>Portable and flexible &#10004;</li>
+              <li>Healthy &#10004;</li>
+              <li>Mature &#10004; </li>
+            </ul>
+          </section>
+          <section>
+            <h4>Standardized solutions for common problems</h4>
+            <small><em>co-locating helper processes, mounting storage systems, distributing secrets, application health checking, replicating application instances, horizontal auto-scaling, naming and discovery, load balancing, rolling updates, resource monitoring, log collection, authn and authz.</em></small><p/>
+            Not quite PaaS, not quite IaaS either.
+          </section>
+          <section>
+            <h4>What does that mean?</h4>
+            No PaaS services <small>(though people are building PaaS'es on top of kubernetes)</small><p/>
+            <p>No handholding.</p>
+            <p>Opinionated reference implementations are starting to show up.<p/>
+            <p>See TODO list at the end...</p>
+            <p/>
+            <small class="fragment">This slide is all over the place!</small>
+            <h2 class="fragment">Yes it is</h2>
+          </section>
+        </section>
+        <section>
+          <section>
+            <img src="img/logo_kubernetes.png" style="border:none; background:none; width: 35%"/><br/>
+            <h2>Kubernetes primitives</h2>
+          </section>
+          <section>
+            <h2>Pods</h2>
+            <small>Running instances of applications</small><br/>
+            <ul>
+              <li>"Smallest schedulable unit"</li>
+              <li>One or more containers that share the namespace/are tightly coupled</li>
+              <li><em>Ephemeral!</em></li>
+              <li>Namespace? </li>
+              <small>
+                <ol>
+                  <li class="fragment">SHM</li>
+                  <li class="fragment">volumes</li>
+                  <li class="fragment">IP</li>
+                  <li class="fragment">hostname</li>
+                </ol>
+              </small>
+            </ul>
+          </section>
+          <section>
+            <h2>Pods</h2>
+            <img src="img/pod.png" style="border:none; background:none; width: 35%"/>
+          </section>
+          <section>
+            <h2>Pods</h2>
+            <pre>
+              <code data-trim>
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ptlcdebug
+  namespace: default
+  labels:
+    app: debug
+spec:
+  containers:
+  - command:
+    - sleep
+    - "86400"
+    image: ubuntu:14.04
+    name: ubuntu
+              </code>
+            </pre>
+          </section>
+          <section>
+            <h2>Labels &amp; selectors</h2>
+            <small>Provide a way to identify &amp; select pods and other components.</small>
+            <pre>
+              <code data-trim>
+"labels": {
+  "app"      : "digib-imp",
+  "version"  : "1.2.3",
+  "component": "frontend"
+}
+              </code>
+            </pre>
+          </section>
+          <section>
+            <h2>Services</h2>
+            <small>A means of finding a running service in the cluster.</small><br/>
+            <ul>
+              <li>Creates a non-routable virtual IP</li>
+              <li>Service discovery</li>
+              <ul><small>
+                <li>Environment variables</li>
+                <li>Cluster DNS</li>
+                <pre class="fragment">postgres.staging.svc.cluster.local</pre>
+              </small></ul>
+              <li>Expose pods outside of the cluster (use rarely)</li>
+              <ul><small>
+                <li>LoadBalancer (no!)</li>
+                <li>NodePort</li>
+              </small></ul>
+              <li>Map services outside of the cluster</li>
+              <li class="fragment">One-up on Borg (no port brokering)</li>
+            </ul>
+          </section>
+          <section>
+            <img src="img/services-overview.png" style="border:none; background:none;"/>
+          </section>
+          <section>
+            <img src="img/services-detail.png" style="border:none; background:none;"/>
+          </section>
+          <section data-transition="fade-out">
+            <h2>Services</h2>
+            <pre>
+              <code data-trim>
+apiVersion: v1
+kind: Service
+metadata:
+  name: digib-imp
+  namespace: develop
+  labels:
+    app: digib-imp
+spec:
+  ports:
+  - port: 80
+    targetPort: 3000
+  selector:
+    app: digib-imp
+              </code>
+            </pre>
+          </section>
+          <section data-transition="fade-in">
+            <h2>Intermezzo</h2>
+            <pre>
+              <code data-trim data-noescape>
+<mark>apiVersion:</mark> v1
+<mark>kind:</mark> Service
+<mark>metadata:</mark>
+  <mark>name:</mark> digib-imp
+  namespace: develop
+  labels:
+    app: digib-imp
+<mark>spec:</mark>
+  ports:
+  - port: 80
+    targetPort: 3000
+  selector:
+    app: digib-imp
+              </code>
+            </pre>
+          </section>
+          <section data-transition="fade-in">
+            <h2>Intermezzo</h2>
+            <pre>
+              <code data-trim data-noescape>
+<mark>apiVersion:</mark> v1
+<mark>kind:</mark> Pod
+<mark>metadata:</mark>
+  <mark>name:</mark> ptlcdebug
+  namespace: default
+  labels:
+    app: debug
+<mark>spec:</mark>
+  containers:
+  - command:
+    - sleep
+    - "86400"
+    image: alpine:3.7
+    name: alpine
+              </code>
+            </pre>
+          </section>
+          <section>
+            <h2>Replication Controller</h2>
+            <small><small class="fragment" data-fragment-index="5">* And replica sets are pretty similar</small></small><br/>
+            <ul>
+              <li>A little wrapper around pods</li>
+              <li>"Make sure there are <em>N</em> pods with this podspec"</li>
+              <small>
+                <ul>
+                  <li class="fragment" data-fragment-index="1">Rescheduling</li>
+                  <li class="fragment" data-fragment-index="2">Scaling</li>
+                  <li class="fragment" data-fragment-index="3">Old way of doing updates</li>
+                  <li class="fragment" data-fragment-index="4">Multiple release tracks</li>
+                </ul>
+              </small>
+            </ul>
+          </section>
+          <section style="margin-top: 0;">
+            <h2>Replication Controller</h2>
+            <pre style="font-size: 45%">
+              <code data-trim data-noescape>
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: nginx
+spec:
+  replicas: 3
+  selector:
+    app: nginx
+  template:
+    metadata:
+      name: nginx
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.11.0
+        ports:
+        - containerPort: 80
+              </code>
+            </pre>
+          </section>
+          <section>
+            <h2>Deployments</h2>
+            <ul>
+              <li>Currently in beta</li>
+              <li>Wrapper for Replica Sets</li>
+              <li>Rolling updates (safer)</li>
+              <li>Rollback made easy or even automatic</li>
+              <li>Lends well to "canary deployment" pattern</li>
+            </ul>
+          </section>
+          <section>
+            <h2>Deployments</h2>
+            <pre>
+              <code data-trim data-noescape>
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.11.0
+        ports:
+        - containerPort: 80
+              </code>
+            </pre>
+          </section>
+          <section>
+            <h2>Ingress</h2>
+            <ul>
+              <li>Specifies how to get to services from <em>outside</em> of the cluster</li>
+              <li>"Single" point of entry</li>
+              <li>Manipulate (tag, secure, ..) incoming traffic here</li>
+              <li>Scan/monitor application responses here!</li>
+            </ul>
+          </section>
+          <section>
+            <h2>Ingress</h2>
+            <pre style="font-size: 45%">
+              <code data-trim data-noescape>
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: test
+spec:
+  rules:
+  - host: foo.bar.com
+    http:
+      paths:
+      - path: /foo
+        backend:
+          serviceName: s1
+          servicePort: 80
+      - path: /bar
+        backend:
+          serviceName: s2
+          servicePort: 80
+              </code>
+            </pre>
+          </section>
+          <section>
+            <h2>Ingress Controller</h2>
+            <small>Yup, it's a proxy..<div class="fragment">on steroids</div></small><br/>
+            <ul>
+              <li>NGINX (but interchangeable)</li>
+              <li>Little controller that updates nginx.conf with cluster state</li>
+              <li>SSL offloader</li>
+              <li>X-Request-Id</li>
+              <li>Unified log format</li>
+              <li>Auth, filtering, etc</li>
+              <li class="fragment">Very nice example of k8s native service</li>
+            </ul>
+          </section>
+          <section>
+            <h2>Secrets</h2>
+            <ul>
+              <li>Simple primitive</li>
+              <li>Mount into FS path or environment</li>
+              <li>Secrets <em>never</em> hit a disk</li>
+              <li>Separate secrets from deployment specifications</li>
+              <li>Backend is probably going to be swapped</li>
+            <ul>
+          </section>
+          <section>
+            <h2>ConfigMap</h2>
+            <ul>
+              <li>Simple primitive</li>
+              <li>Mount into FS path or environment</li>
+              <li>Separate ultra fluid params from deployment specifications</li>
+              <li class="fragment">Example: nginx ingress controller</li>
+            <ul>
+          </section>
+          <section tagcloud>
+            <h2>And many more..</h2>
+            <small>(demo if we're on schedule..)</small><br/>
+            Volumes
+            Namespace
+            Annotations
+            Service Account
+            DaemonSet
+            Jobs
+            StatefulSet
+            <em>Persistent</em> volumes
+            Horizontal Pod Autoscaling
+            Resource quotas
+            <em>Extentions</em>
+          </section>
+        </section>
+        <section>
+          <section>
+            <img src="img/logo_kubernetes.png" style="border:none; background:none;width: 35%"/><br/>
+            <h2>Kubernetes cluster</h2>
+            <h6>(or: the stuff thats powering kubernetes)</h6>
+          </section>
+          <section>
+            <img src="img/logo_coreos.png" alt="CoreOS" style="border:none; background:none;"/>
+            <h1>Core<span style="color: #f35d6b">O</span><span style="color: #52a3d9">S</span></h1>
+            <ul>
+              <li>Highly specialized Linux distribution</li>
+              <ul>
+                <small>
+                  <li>Kernel</li>
+                  <li>Docker, rkt</li>
+                  <li>etcd</li>
+                  <li>systemd</li>
+                </small>
+              </ul>
+              <li>Rolling release model (stable, beta, alpha)</li>
+              <li class="fragment">Automatic updates are encouraged <small class="fragment">(but feels a little too wild for me)</small></li>
+            </ul>
+          </section>
+          <section>
+            <img src="img/logo_etcd.png" style="border:none; background:none;"/>
+            <h2>etcd</h2>
+            <ul>
+              <li>Distributed consistent key/value store</li>
+              <li>Unelected "winner" in k/v market :-)</li>
+              <li>Database engine for kubernetes</li>
+              <li>Talk about removing events storage from etcd</li>
+            </ul>
+          </section>
+          <section>
+            <h2>calico</h2>
+            <ul>
+              <li>Overlay network (VXLAN)</li>
+              <li>Enables pods to directly communicate with each other</li>
+              <li>Decentralized firewall</li>
+            </ul>
+          </section>
+          <section>
+            <img src="img/logo_kubernetes.png" style="border:none; background:none;width: 5%"/><br/>
+            <h1>Nodes</h1>
+            <small class="fragment">Used to be "minions" :-)</small>
+            <br/>
+            <ul>
+              <li>kubelet</li>
+              <li>kube-proxy</li>
+              <li>fluentd</li>
+              <li>cadvisor</li>
+              <li>container engine (currently docker)</li>
+              <li class="fragment">Actually using rkt for kubernetes components (hyperkube)</li>
+            </ul>
+          </section>
+          <section>
+            <img src="img/logo_kubernetes.png" style="border:none; background:none;width: 5%"/><br/>
+            <h1>Master(s)</h1>
+            <ul>
+              <li>apiserver</li>
+              <li>controller manager</li>
+              <li>schedulers</li>
+            </ul>
+          </section>
+          <section>
+            <img src="img/k8s_architecture.png" style="border:none; background:none; width:80%"/>
+          </section>
+        </section>
+        <section>
+					<h2>When do we get to the *&!$# demo?!</h2>
+					<h1 class="fragment">NOW!</h1>
+          <div class="fragment">
+            <small>Featured:</small><br/>
+            <ul>
+              <li>Gitlab</li>
+              <li>Kibana</li>
+              <li>Grafana</li>
+            </ul>
+          </div>
+        </section>
+        <section>
+          <section>
+            <h1>TODO</h1>
+            <img src="img/bob_de_bouwer.png" style="border:none; background:none; width: 20%"/>
+          </section>
+          <section>
+            <h3>The management summary</h3>
+            <ul>
+              <li>Security evaluation</li>
+              <li>Operational processes</li>
+              <li>(Stress) testing</li>
+            </ul>
+          </section>
+          <section>
+            <h2>Security</h2>
+            <small>No system helps better with security, but we still have to cover some ground</small><br/>
+            <ul>
+              <li>Network isolation</li>
+              <li>Enable and use authorization</li>
+              <li>Updating components needs to be routine work</li>
+              <li>Underlying infrastructure assumed secure (Cloud infra, Container OS)</li>
+            </ul>
+            <br/>
+            <img src="img/container_security.png" class="fragment" style="border:none; background:none;"/>
+          </section>
+          <section>
+            <h3>Operations</h3>
+            <ul>
+              <li>Offsite backups <span class="fragment">(and periodic testing of said backups)</span></li>
+              <li>Procedures <span class="fragment">(documentation...)</span></li>
+              <li>Further chaos-monkey proofing</li>
+            <img src="img/site-reliability-engineering.png" class="fragment" style="border:none; background:none;"/>
+            </ul>
+          </section>
+          <section>
+            <h3>Change in mindset about "operations"</h3>
+            <div class="fragment">#NoOps</div>
+            <div class="fragment">#NoDevs</div>
+            <small class="fragment">Reality: we're all doing ops work.</small><br/>
+            <img src="img/just-do-it.gif" class="fragment" style="border:none; background:none;"/>
+          </section>
+          <section>
+            <img src="img/onemanband.jpg" class="fragment" style="border:none; background:none;width:25%"/>
+          </section>
+        </section>
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				history: true,
+        width: '90%',
+        height: '90%',
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+          { src: 'plugin/tagcloud/tagcloud.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>
